@@ -19,24 +19,36 @@ void intercambiar(int *a, int *b) {
     *b = temp;
 }
 
-/*
-  Función de partición:
-    - Debe elegir un pivote (por ejemplo, el último elemento).
-    - Reordenar el arreglo colocando menores a la izquierda y mayores a la derecha.
-    - Retornar el índice final del pivote.
-*/
+
 int particion(int arr[], int bajo, int alto) {
-    // Escribe aquí tu función
-    return -1; // Placeholder, reemplazar por el índice real del pivote
+    int pivote = arr[bajo];
+
+    while(1){
+        while(arr[bajo] < pivote){      // - Mientras los elementos izquierdos (si se toma el inicio)
+            bajo++;                     //   sean menores al pivote el indice continua avanzando
+        }
+
+        while(arr[alto] > pivote){
+            alto--;            
+        }
+        if(bajo >= alto) {                  // Si bajo>=alto quiere decir que debe no hay que intercambiar
+        return alto;                        // Se retorna el indice donde se quedó para dividir el arreglo
+        } else {
+            intercambiar(&arr[bajo] ,&arr[alto]);   // Else, encontramos un valor no ordenado
+            bajo++;                                 // Continuamos los indices
+            alto--;
+    }
+    }
 }
 
-/*
-  Función QuickSort:
-    - Caso base: si bajo >= alto, terminar.
-    - Paso recursivo: llamar a particion, y aplicar QuickSort en las dos mitades.
-*/
 void quicksort(int arr[], int bajo, int alto) {
-    // Escribe aquí tu función
+    if (bajo>=alto){                                        // Caso base
+        return;
+    } else {
+        int indiceParticion = particion(arr, bajo, alto);   // Aplicar particion en indice
+        quicksort(arr, bajo, indiceParticion);              // QS en primera mitad
+        quicksort(arr, indiceParticion + 1, alto);          // QS en segunda mitad
+    }
 }
 
 /* Función auxiliar para imprimir un arreglo */

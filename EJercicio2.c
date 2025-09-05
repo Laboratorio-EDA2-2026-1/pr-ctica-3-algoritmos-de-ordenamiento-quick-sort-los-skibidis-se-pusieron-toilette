@@ -21,33 +21,40 @@ static inline void intercambiar(int *a, int *b) {
     int t = *a; *a = *b; *b = t;
 }
 
-/* Devuelve el promedio (double) de arr[bajo..alto] */
+
 double calcular_promedio_segmento(int arr[], int bajo, int alto) {
-    // Escribe aquí tu función
-    // Pista:
-    //   - Acumula en (long long) o (double) para evitar overflow
-    //   - Devuelve suma / cantidad como double
-    return 0.0; // placeholder
+    double piv;     // pivote donde se guardan los valores
+
+    for (int i = bajo; i<=alto ; i++) {
+        piv = piv + arr[i];                 // Se recorre el arreglo hasta que se sumen todos los valores
+    }
+
+    piv = piv/(alto - bajo);                // Se saca el promedio
+
+    return piv;                             // Se regresa el valor del pivote
 }
 
-/*
-  Partición usando pivote = promedio.
-  Objetivo:
-    - Reordenar in-place arr[bajo..alto] comparando cada elemento con "pivote".
-    - Colocar a la izquierda los elementos < pivote
-      y a la derecha los elementos >= pivote (o la convención que elijas).
-    - NO insertar el pivote en el arreglo (solo se usa para decidir posiciones).
-    
-  Nota:
-    - Define y documenta tu convención de partición para manejar duplicados:
-      por ejemplo, (< pivote) a la izquierda y (>= pivote) a la derecha.
-    - Asegura progreso (evitar ciclos infinitos cuando todos son iguales).
-*/
+
 int particion_por_promedio(int arr[], int bajo, int alto, double pivote) {
-    // Escribe aquí tu función
-    // Puedes implementar un esquema tipo Hoare o Lomuto pero guiado por pivot double.
-    // Recuerda: NO escribas 'pivote' dentro del arreglo; solo compáralo contra arr[i].
-    return -1; // placeholder
+
+    int i = bajo; int j = alto;         // cambio por variables mas simples
+
+    while(1){
+        while(arr[i] < pivote){         // - Mientras los elementos izquierdos (si se toma el inicio)
+            i++;                        //   sean menores al pivote el indice continua avanzando
+        }
+
+        while(arr[j] >= pivote){        // >= para encontrar duplicados
+            j--;            
+        }
+        if(i >= j) {                    // Si bajo>=alto quiere decir que debe no hay que intercambiar
+        return j;                       // Se retorna el indice donde se quedó para dividir el arreglo
+        } else {
+            intercambiar(&arr[i] ,&arr[j]);   // Else, encontramos un valor no ordenado
+            i++;                                 // Continuamos los indices
+            j--;
+        }
+    }
 }
 
 /*
@@ -59,7 +66,14 @@ int particion_por_promedio(int arr[], int bajo, int alto, double pivote) {
         3) Llamar recursivamente a los segmentos definidos por k
 */
 void quicksort_promedio(int arr[], int bajo, int alto) {
-    // Escribe aquí tu función
+    if (bajo>=alto){                                        // Caso base
+        return;
+    } else {
+        int pivote = calcular_promedio_segmento(arr, bajo, alto);
+        int k = particion_por_promedio(arr, bajo, alto, pivote);   // Aplicar particion en indice
+        quicksort_promedio(arr, bajo, k);              // QS en primera mitad
+        quicksort_promedio(arr, k + 1, alto);          // QS en segunda mitad
+    }
 }
 
 /* Utilidad para imprimir un arreglo */
