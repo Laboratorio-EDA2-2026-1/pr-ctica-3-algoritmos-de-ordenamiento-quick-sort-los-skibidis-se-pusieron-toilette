@@ -4,6 +4,8 @@
 #include <ctype.h>
 #include <time.h>
 
+// 	NOTA DEL EQUIPO: Todavia no esta hecho!!!
+
 /*
   Ejercicio 3. El problema del papá tacaño.
 
