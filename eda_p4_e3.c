@@ -4,8 +4,6 @@
 #include <ctype.h>
 #include <time.h>
 
-// 	NOTA DEL EQUIPO: Todavia no esta hecho!!!
-
 /*
   Ejercicio 3. El problema del papá tacaño.
 
@@ -114,7 +112,7 @@ int parsear_token(const char *tok, Destino *d) {
  */
 int elegir_destino(const Destino *destinos, int size) {
 
-	printf("Eligiendo destinos... \n");
+	// printf("Eligiendo destinos... \n");
 
     // Escribe aquí tu función
 
@@ -158,14 +156,14 @@ int elegir_destino(const Destino *destinos, int size) {
     	
     }
 
-    //printf("Dest. conocidos:    %d ", conocidos);
-    //imprimir_arr(conocidoArr, conocidos);
-    //printf("Dest. desconocidos: %d \n", desconocidos);
+    printf("Dest. conocidos:    %d ", conocidos);
+    imprimir_arr(conocidoArr, conocidos);
+    printf("Dest. desconocidos: %d \n", desconocidos);
 
     /*Caso donde hay mas desconocidos que conocidos */
     if (conocidos<desconocidos) {
 
-    	// printf("Demasiados desconocidos. Indice elegido: %d\n", indice_aleatorio);
+    	printf("Demasiados desconocidos. Indice elegido: %d\n", indice_aleatorio);
     	return indice_aleatorio;
 
     } else {
@@ -174,11 +172,12 @@ int elegir_destino(const Destino *destinos, int size) {
     		promedio = promedio + conocidoArr[i];
     	}
     	promedio = promedio / conocidos;
-    	//printf("Promedio de destinos conocidos: %d \n", promedio);
+    	printf("Promedio de destinos conocidos: %d \n", promedio);
     }
 
     for (int i=0; i<conocidos; i++) {
     	if (conocidoArr[i] < promedio) indice_elegido = i;
+    	indice_elegido--;
     }
 
     return indice_elegido;
@@ -242,7 +241,7 @@ int main(void) {
     }
 
     // Salida: imprime el destino elegido tal cual fue ingresado
-    printf("Destino elegido (índice %d): ", indice);
+    printf("Destino elegido (lugar %d): ", indice+1);
     if (destinos[indice].es_conocido) {
         printf("%d\n", destinos[indice].costo);
     } else {
